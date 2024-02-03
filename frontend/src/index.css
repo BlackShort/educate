@@ -16,6 +16,11 @@
   list-style: none;
 }
 
+body{
+  height: 100vh;
+  overflow: hidden
+}
+
 
 @tailwind base;
 @tailwind components;
