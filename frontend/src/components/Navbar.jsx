@@ -1,162 +1,80 @@
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import { useState } from 'react';
-import { Link } from '@mui/material';
-
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { useState, useContext, useEffect, useRef } from 'react';
+import { PiUserBold } from "react-icons/pi";
+import { Link, NavLink } from 'react-router-dom'
+import { Context } from '../context/Context';
+import { HiMenuAlt3 } from "react-icons/hi";
 
 export const Navbar = () => {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const { user, isAuthenticated } = useContext(Context);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const sidebarRef = useRef(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleClickOutside = (event) => {
+    if (
+      sidebarRef.current &&
+      !sidebarRef.current.contains(event.target) &&
+      !event.target.closest(".toggle-button")
+    ) {
+      setIsMenuOpen(false);
+    }
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            Educate
-          </Typography>
+    <div className="sticky top-0 z-10 shadow-sm bg-gray-200 px-4 py-3">
+      <div className="container relative mx-auto flex justify-between items-center">
+        <Link to={'/'}>
+          <div className="text-3xl font-semibold">Educate</div>
+        </Link>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            Educate
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+        <div className="flex flex-row-reverse md:flex-row items-center gap-4">
+          <div className="hidden md:flex items-center gap-5">
+            <NavLink to="/" className="font-medium">Home</NavLink>
+            <NavLink to="/notes/study-material" className="font-medium">Notes</NavLink>
+            <NavLink to="/career" className="font-medium">Career</NavLink>
+            <NavLink to="/contact" className="font-medium">Contact</NavLink>
+          </div>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
-  );
+          <div onClick={toggleMenu} className='flex items-center justify-center md:hidden cursor-pointer hover:bg-gray-300/80 p-1 h-9 w-9 rounded-full toggle-button'>
+            <HiMenuAlt3 fontSize={30} />
+          </div>
+
+          <div className="flex items-center gap-2" ref={sidebarRef}>
+            {isAuthenticated ? (
+              <Link to={`/profile/${user._id}/me`} className="border border-slate-500 flex items-center gap-2 bg-neutral-500/50 rounded-full px-2 md:px-3 py-1 cursor-pointer">
+                <PiUserBold fontSize={18} />
+                <span className="text-sm md:text-base font-medium cursor-pointer select-none" id="user">Profile</span>
+              </Link>
+            ) : (
+              <Link to={'/login'} className="border border-slate-500 flex items-center gap-2 bg-neutral-500/50 rounded-full px-3 py-1 cursor-pointer">
+                <PiUserBold fontSize={18} />
+                <span className="text-sm md:text-base font-medium cursor-pointer select-none" id="user">Login</span>
+              </Link>
+            )}
+          </div>
+        </div>
+
+        {isMenuOpen && (
+          <div className="md:hidden absolute top-12 right-0 h-screen w-[50%] bg-gray-200" ref={sidebarRef}>
+            <div className="flex flex-col gap-4 items-center py-6">
+              <NavLink to="/" className="font-medium text-xl">Home</NavLink>
+              <NavLink to="/notes/study-material" className="font-medium text-xl">Notes</NavLink>
+              <NavLink to="/career" className="font-medium text-xl">Career</NavLink>
+              <NavLink to="/contact" className="font-medium text-xl">Contact</NavLink>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
 }

@@ -1,69 +1,90 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { MdOutlineEmail } from "react-icons/md";
+import { RiInstagramFill } from "react-icons/ri";
+import { FaTwitter, FaYoutube, FaLinkedin } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import { FaPhone } from "react-icons/fa";
+
+const SocialLink = ({ icon, to }) => (
+  <Link to={to}>
+    <div className="circle bg-white rounded-full h-7 w-7 flex justify-center items-center">
+      {icon}
+    </div>
+  </Link>
+);
+
+const ContactInfo = ({ icon, text }) => (
+  <div className="flex gap-6">
+    <div className="circle bg-white rounded-full h-7 w-7 flex justify-center items-center">
+      {icon}
+    </div>
+    <p className="text-slate-300">{text}</p>
+  </div>
+);
+
+const FooterSection = ({ title, links }) => (
+  <div className="flex flex-col text-slate-300 gap-4 font-medium text-sm">
+    {links.map((link) => (
+      <Link key={link.to} to={link.to}>{link.title}</Link>
+    ))}
+  </div>
+);
 
 export const Footer = () => {
+  const leftLinks = [
+    { to: "/", title: "Home" },
+    { to: "/about", title: "About Us" },
+    { to: "/contact", title: "Contact" },
+    { to: "/career", title: "Career" },
+  ];
+
+  const rightLinks = [
+    { to: "/notes/study-material", title: "Study Material" },
+    { to: "/notes/asignments", title: "Assignment" },
+    { to: "/notes/questions", title: "PYQs" },
+    { to: "/notes/note", title: "Notes" },
+    { to: "/notes/research-paper", title: "Research Paper" },
+    { to: "/notes/archives", title: "Archives" },
+  ];
+
   return (
-    <div className="wrapper h-fit w-[-webkit-fill-available]">
-      <div className="bg-blue-950 h-fit w-auto flex flex-row flex-wrap">
-
-        <div className="left flex flex-col w-1/4 px-8 py-8 gap-6">
-          <div className="logo text-xl font-bold font-siz text-white text-center">
-            EDUCATE
+    <div className="wrapper bg-slate-800">
+      <div className="flex flex-wrap gap-2 md:gap-60">
+        <div className="flex flex-col gap-4">
+          <div className="px-4 pt-5">
+            <p className="text-neutral-200 text-3xl font-medium">
+              Educate
+            </p>
           </div>
-          <div className="links flex flex-col gap-3 text-slate-300  justify-center ">
 
-            <div className="email flex flex-row gap-2 justify-center">
-              <MdOutlineEmail className="my-1" />
-              <Link to="">Email</Link>
-            </div>
-            <div className="email flex flex-row gap-2 justify-center">
-              <MdOutlineEmail className="my-1" />
-              <Link to="">Phone</Link>
-            </div>
-            <div className="email flex flex-row gap-2 justify-center">
-              <MdOutlineEmail className="my-1" />
-              <Link to="">Privacy policy</Link>
+          <div className="leftdown h-fit">
+            <div className="contact flex flex-col px-4 text-sm gap-3 py-4">
+              <ContactInfo icon={<MdEmail />} text="contact@educate.com" />
+              <ContactInfo icon={<FaPhone />} text="+91 9834097122" />
             </div>
           </div>
         </div>
 
-        <div className="left flex flex-col w-1/4 px-8 py-8 gap-6">
-          <div className="logo text-xl font-bold font-siz text-white text-center">
-            SOCIAL
-          </div>
-          <div className="links flex flex-col text-center gap-3 text-slate-300">
-            <a href="https://www.instagram.com/">Instagram</a>
-            <a href="https://www.facebook.com/">Facebook</a>
-            <a href="https://www.youtube.com/">Youtube</a>
-          </div>
-        </div>
-        <div className="middle flex flex-col w-1/4 px-8 py-8 gap-6">
-          <div className="logo text-xl font-bold font-siz text-white text-center">
-            IMPORTANT LINKS
-          </div>
-          <div className="links flex flex-col text-center gap-3  text-slate-300">
-            <a href="https://www.instagram.com/">Instagram</a>
-            <a href="https://www.facebook.com/">Facebook</a>
-            <a href="https://www.youtube.com/">Youtube</a>
-          </div>
-        </div>
-        <div className="right flex flex-col w-1/4 px-8 py-8 gap-6">
-          <div className="logo text-xl font-bold font-siz text-white text-center">
-            LINKS
-          </div>
-          <div className="links flex flex-col text-center gap-3  text-slate-300">
-            <a href="https://www.instagram.com/">Instagram</a>
-            <a href="https://www.facebook.com/">Facebook</a>
-            <a href="https://www.youtube.com/">Youtube</a>
-          </div>
+        <div className="right flex gap-52 justify-around px-10 py-10">
+          <FooterSection title="Home" links={leftLinks} />
+          <FooterSection title="Explore" links={rightLinks} />
         </div>
       </div>
-      <div className="copyright bg-blue-950 border-y-2 border-slate-700   text-center  ">
-        <p className="text-slate-500 my-1">
-          All Content and Intellectual Property is under Copyright Protection |
-          myCBSEguide.com ©2007-2024
-        </p>
+
+      <div className="border-t border-slate-500 flex justify-between">
+        <div className="downleft px-4 py-4">
+          <p className="text-slate-400 text-sm tracking-wide font-medium">
+            Copyright © 2024 Educate | All rights reserved
+          </p>
+        </div>
+
+        <div className="downright">
+          <div className="social flex gap-5 py-3 px-4">
+            <SocialLink icon={<FaYoutube />} to="/youtube" />
+            <SocialLink icon={<RiInstagramFill />} to="/instagram" />
+            <SocialLink icon={<FaTwitter />} to="/twitter" />
+            <SocialLink icon={<FaLinkedin />} to="/linkedin" />
+          </div>
+        </div>
       </div>
     </div>
   );

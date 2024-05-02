@@ -1,10 +1,3 @@
-import {Navbar} from './Navbar';
-import {Cards} from './Cards';
-import {Footer} from './Footer';
-
-
-export {
-    Navbar,
-    Cards,
-    Footer,
-}
+export { Navbar } from './Navbar';
+export { Card } from './Cards';
+export { Footer } from './Footer';
