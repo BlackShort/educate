@@ -22,7 +22,7 @@ app.use(cookieParser());
 const allowedOrigins = [process.env.FRONTEND_URL, process.env.ADMIN_URL];
 
 // Enable CORS middleware with the configured options
-app.use(cors("*", {
+app.use(cors({
     origin: (origin, callback) => {
         // Use req.header('Origin') instead of origin directly
         if (!origin || allowedOrigins.includes(origin)) {
