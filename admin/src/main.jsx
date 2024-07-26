@@ -5,7 +5,7 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { ContextApi } from './context/Context.jsx';
 
-export const server = "http://localhost:4000";
+export const server = "https://educates.onrender.com";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

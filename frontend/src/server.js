@@ -1,1 +1,1 @@
-export const server = 'http://localhost:4000/api';
+export const server = 'https://educates.onrender.com/api';
