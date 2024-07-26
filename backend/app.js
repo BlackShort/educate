@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Define the whitelist of allowed origins without double quotes
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+const allowedOrigins = [process.env.FRONTEND_URL, process.env.ADMIN_URL];
 
 // Enable CORS middleware with the configured options
 app.use(cors({
