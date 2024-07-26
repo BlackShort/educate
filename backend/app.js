@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Define the whitelist of allowed origins without double quotes
-const allowedOrigins = ['https://educates.netlify.app/', 'https://admin-educates.netlify.app/'];
+const allowedOrigins = ['https://educates.netlify.app', 'https://admin-educates.netlify.app'];
 
 // Enable CORS middleware with the configured options
 app.use(cors({
